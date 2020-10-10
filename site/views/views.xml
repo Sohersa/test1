@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Course form -->
+    <record model="ir.ui.view" id="course_form_view" >
+        <field name="name">course.form</field>
+        <field name="model">site.course</field>
+        <field name="arch" type="xml">
+            <form string="Course form">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="responsible_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Description of course">
+                            <field name="description"/>
+                        </page>
+                        <page string="Sessions">
+                            <field name="session_id">
+                                <tree string="Registered session">
+                                    <field name="name"/>
+                                    <field name="instructor_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="about the course">This is an example of notebooks</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Session form -->
+    <record model="ir.ui.view" id="session_form_view">
+        <field name="name">session.form</field>
+        <field name="model">site.session</field>
+        <field name="arch" type="xml">
+            <form string="Session form">
+                <sheet>
+                    <group>
+                        <group string="General">
+                            <field name="course_id"/>
+                            <field name="name"/>
+                            <field name="instructor_id"/>
+                        </group>
+                        <group string="Schedule">
+                            <field name="start_date"/>
+                            <field name="duration"/>
+                            <field name="seats"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- search -->
+    <record model="ir.ui.view" id="course_search_view">
+        <field name="name">course.search</field>
+        <field name="model">site.course</field>
+        <field name="arch" type="xml" >
+            <search>
+                <field name="name"/>
+                <field name="description"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- course tree -->
+    <record model="ir.ui.view" id="course_tree_view">
+      <field name="name">course.tree</field>
+      <field name="model">site.course</field>
+      <field name="arch" type="xml">
+        <tree string="Course tree">
+          <field name="name"/>
+          <field name="responsible_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- session tree -->
+    <record model="ir.ui.view" id="session_tree_view">
+        <field name="name">session.tree</field>
+        <field name="model">site.session</field>
+        <field name="arch" type="xml">
+            <tree string="Session tree">
+                <field name="name" />
+                <field name="course_id" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Window action -->
+    <record model="ir.actions.act_window" id="course_list_action">
+        <field name="name">Courses</field>
+        <field name="res_model">site.course</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first course</p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="session_list_action">
+        <field name="name">Sessions</field>
+        <field name="res_model">site.session</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create the first session</p>
+        </field>
+    </record>
+
+    <!-- top level menu, no parent -->
+    <menuitem id="main_site_menu" name="Site" />
+    <menuitem id="site_menu" name="Site" parent="main_site_menu" />
+    <!-- courses -->
+    <menuitem id="courses_menu" name="Courses" parent="main_site_menu"
+        action="course_list_action"/>
+    <!-- sessions -->
+    <menuitem id="session_menu" name="Sessions" parent="main_site_menu"
+        action="session_list_action"/>
+</odoo>
